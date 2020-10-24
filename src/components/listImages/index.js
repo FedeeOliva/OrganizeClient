@@ -18,8 +18,7 @@ const ListImages = ({search}) => {
 				console.log(error);
 			}
 		}
-		//if(search.length > 3) 
-		fetchImages();				
+		fetchImages();			
 		
 	}, [search]);
 

@@ -1,33 +1,28 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useRef, useCallback} from 'react';
 import {Title,Form , Input, Subtitle, Submit} from './style';
 import ListImages from '../listImages';
-import throttle from 'lodash';
+import debounce from 'lodash/debounce';
 
 const NewBoard = (props) => {
 
 	const [name, setName] = useState('');
 	const [search, setSearch] = useState('');
 	const inputSearch = useRef(null);
-	/*const [search, setSearch] = useState({searching: '', keyword: ''});
-	const {searching, keyword} = search;
 
-	const handleSearchThrottle = () => {
-		setSearch({search, keyword: searching})
-	}
-	const handleSearch = e => {
-		setSearch({...search, searching: e.target.value})
-		console.log(typeof throttle);
-		throttle(handleSearchThrottle, 1000);
-	}*/
-	//use ref al input, throttle en el handle change, y que reciba el
-	//valor desde la ref
 
-	const handleSearch = () =>{
-		setTimeout( () =>{
-			setSearch(inputSearch.current.value);
-		} ,1000)
-		
-	}
+    //Se podria agregar algun spinner o algo que avise que se esta buscando
+    const throttledHandleSearch = useCallback(
+        debounce( nextValue => setSearch(nextValue) ,700)
+      ,[]);
+
+    /*Si quisiera tener controlado el input de busqueda deberia crear
+    otro estado que use la funcion debounce, y ese estado pasar a ListImages
+    y en handleSearch actualizar ambos estados*/
+    const handleSearch = () =>{
+        throttledHandleSearch(inputSearch.current.value);
+    }
+
+
   return (
         	
     	<Form> 
