@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Images} from './style';
 
-const ListImages = ({search}) => {
+const ListImages = ({keyword}) => {
 
 	const [images, setImages] = useState([]);
 	const urlBase = 'https://pixabay.com/api/?';
@@ -10,7 +10,7 @@ const ListImages = ({search}) => {
 	useEffect( () =>{
 		const fetchImages = async () =>{
 			try{
-				const res = await fetch(`${urlBase}key=${apiKey}&q=${search}`);
+				const res = await fetch(`${urlBase}key=${apiKey}&q=${keyword}`);
 				const imagesResponse = await res.json();
 				console.log(imagesResponse);
 				setImages(imagesResponse.hits);				
@@ -19,8 +19,8 @@ const ListImages = ({search}) => {
 			}
 		}
 		fetchImages();			
-		
-	}, [search]);
+		//agregar go top al buscar e infinite scroll
+	}, [keyword]);
 
   return (
     <Images>
