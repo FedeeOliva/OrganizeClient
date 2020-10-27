@@ -10,7 +10,8 @@ const ListImages = ({keyword}) => {
 	useEffect( () =>{
 		const fetchImages = async () =>{
 			try{
-				const res = await fetch(`${urlBase}key=${apiKey}&q=${keyword}`);
+				const res = await fetch(`${urlBase}key=${apiKey}&q=${keyword}
+					&category=backgrounds`);
 				const imagesResponse = await res.json();
 				console.log(imagesResponse);
 				setImages(imagesResponse.hits);				
