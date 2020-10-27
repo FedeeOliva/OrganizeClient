@@ -8,8 +8,9 @@ const urlBase = 'https://pixabay.com/api/?';
 const apiKey = '17758117-18215cb7c2e384f06943fcff0';
 const INITIAL_PAGE = 1;
 
-const useImages = ({keyword}) => {
+const useImages = (keyword) => {
 	const [images, setImages] = useState([]);
+	const [page, setPage] = useState(1);
 
 	const fetchImages = async (keyword = '', page = 1) =>{
 		try{
@@ -22,10 +23,10 @@ const useImages = ({keyword}) => {
 		}
 	}
 
-	useEffect( () =>{
-		fetchImages()
+	/*useEffect( () =>{
+		fetchImages(keyword, page);
 
-	}, [keyword]);
+	}, [keyword]);*/
 
 	return [images]	
 }
