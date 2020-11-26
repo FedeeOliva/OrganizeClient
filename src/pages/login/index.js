@@ -9,12 +9,12 @@ import useSpinner from '../../hooks/useSpinner';
 
 const LoginPage = (props) => {
 
-    const {user} = useContext(AuthContext);
+    const {user, getUserAuth} = useContext(AuthContext);
     const [Spinner, loading, setLoading ,Centered] = useSpinner(true);
     
 //Revisa si hay un token y redirige. Si no lo hay recien muestra el login
 //Esto tendria un problema si el token ya expiró
-    useEffect(()=>{        
+    useEffect(()=>{     
         const thereIsToken = async () =>{
           try{
             const token = await localStorage.getItem('token');

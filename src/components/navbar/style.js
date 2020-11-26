@@ -23,6 +23,11 @@ export const Nav = styled(Container)`
 export const Brand = styled(Link)`
 	color: ${ ({theme}) => theme.textColor.white};
 	position: absolute;
+	&:hover{
+		color: ${ ({theme}) => theme.textColor.white};
+		text-decoration: none;
+	}
+
 `
 export const Cerrar = styled.button`
 	background: none;

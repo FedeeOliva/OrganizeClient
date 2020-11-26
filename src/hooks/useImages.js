@@ -1,12 +1,7 @@
-import React,{useState, useEffect} from 'react';
-
-// https://github.com/midudev/react-live-coding/blob/master/src/hooks/useGifs.js
-// https://github.com/midudev/react-live-coding/blob/master/src/services/getGifs.js
-// https://github.com/midudev/react-live-coding/blob/master/src/pages/SearchResults/index.js
+import {useState, useEffect} from 'react';
 
 const urlBase = 'https://pixabay.com/api/?';
 const apiKey = '17758117-18215cb7c2e384f06943fcff0';
-const INITIAL_PAGE = 1;
 
 const useImages = (keyword) => {
 	const [images, setImages] = useState([]);
@@ -17,18 +12,28 @@ const useImages = (keyword) => {
 			const res = await fetch(`${urlBase}key=${apiKey}&q=${keyword}
 				&category=backgrounds&page=${page}`);
 			const imagesResponse = await res.json();
-			setImages(imagesResponse.hits);				
+			return imagesResponse.hits;				
 		}catch(error){
 			console.log(error);
 		}
 	}
 
-	/*useEffect( () =>{
-		fetchImages(keyword, page);
+	useEffect( () =>{
+		fetchImages(keyword)
+		.then(imgs => setImages(imgs));
+		setPage(1);
+	}, [keyword]);
 
-	}, [keyword]);*/
+	useEffect(()=>{
+		if(page === 1) return;
+		fetchImages(keyword, page)
+			//Ponerlo asi me sirve para quitar la deps  images de useEffect
+		.then(imgs => setImages(prevImages => [...prevImages, ...imgs]));
 
-	return [images]	
+	// eslint-disable-next-line
+	},[page]);
+
+	return [images, setPage]	
 }
 
 export default useImages;
