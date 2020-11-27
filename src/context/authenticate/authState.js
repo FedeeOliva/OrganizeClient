@@ -34,10 +34,8 @@ const AuthState = props => {
 
 	const getUserAuth = async () =>{
 		try{
-			const token = await localStorage.getItem('token');
-			if(token){
-				tokenAuth(token);
-			}
+			const token = await localStorage.getItem('token');		
+			await tokenAuth(token);			
 			const response = await Axios.get('/api/auth');
 			dispatch({
 				type: GET_USER,
@@ -51,10 +49,17 @@ const AuthState = props => {
 		}	
 	}
 
+	/*
+	Funcion similar a getUserAuth sin el dispatch
+	const isAuth = async () =>{
+	
+	}
+	*/
+
 	const logIn = async data =>{
 		try{
 			const response = await Axios.post('/api/auth', data);
-			localStorage.setItem('token', response.data.token);
+			await localStorage.setItem('token', response.data.token);
 			await getUserAuth();
 		}catch(error){
 			dispatch({
@@ -64,7 +69,8 @@ const AuthState = props => {
 		}
 	}
 
-	const logOut = async =>{
+	const logOut = async () =>{
+		await localStorage.removeItem('token');
 		dispatch({
 				type: LOG_OUT,
 				payload: 'Sesion cerrada'

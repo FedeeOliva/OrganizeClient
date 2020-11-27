@@ -9,11 +9,9 @@ const PrivateRoute = ({component: Component, ...props}) => {
   const [Spinner, loading, setLoading ,Centered] = useSpinner(true);
 
 	useEffect(()=>{
-
     const getUser = async () =>{
       try{
-        await getUserAuth();
-        
+        await getUserAuth();        
       }catch(error){
         console.log(error);
       }
@@ -30,7 +28,7 @@ const PrivateRoute = ({component: Component, ...props}) => {
           <Spinner/>
     </Centered>
     :
-    <Route {...props} render = { props => !authenticate ? (
+    <Route {...props} render = { props => !authenticate ? (        
     		<Redirect to="/" />
     	): (
     		<Component {...props}/>

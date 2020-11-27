@@ -7,8 +7,8 @@ const NavbarComponent = (props) => {
 
 	const {authenticate, logOut} = useContext(AuthContext);
 
-	const handleLogOut = () => {
-		logOut();
+	const handleLogOut = async () => {
+		await logOut();
 	}
   return (
     <Navbar>

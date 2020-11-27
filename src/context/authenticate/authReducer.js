@@ -5,7 +5,6 @@ export default (state, action) => {
 	switch(action.type){
 		case LOG_OUT:
 		case FAIL_AUTHENTICATE:
-			localStorage.removeItem('token');
 			return{
 				...state,
 				authenticate: false,
