@@ -13,14 +13,15 @@ const LoginPage = (props) => {
     const [Spinner, loading, setLoading ,Centered] = useSpinner(true);
     
     useEffect(()=>{     
-        const isAuth = async () =>{ 
+        const isAuth = async () =>{            
             await getUserAuth();            
             setLoading(false);                                  
         }
         if(authenticate){
             props.history.push('/user');
         }else{
-            isAuth(); 
+            if(localStorage.getItem('token')) isAuth(); 
+            else setLoading(false);
         }   
         // eslint-disable-next-line
     }, [authenticate]);    

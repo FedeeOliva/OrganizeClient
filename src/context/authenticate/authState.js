@@ -27,7 +27,7 @@ const AuthState = props => {
 		}catch(error){
 			dispatch({
 				type: FAIL_AUTHENTICATE,
-				payload: error.response.data.msg
+				payload: error.msg
 			})
 		}		
 	}
@@ -44,7 +44,7 @@ const AuthState = props => {
 		}catch(error){
 			dispatch({
 				type: FAIL_AUTHENTICATE,
-				payload: error.response.data.msg
+				payload: error.msg
 			})
 		}	
 	}
@@ -64,7 +64,7 @@ const AuthState = props => {
 		}catch(error){
 			dispatch({
 				type: FAIL_AUTHENTICATE,
-				payload: error.response.data.msg
+				payload: error.msg
 			})
 		}
 	}

@@ -10,13 +10,14 @@ import NewBoard from '../../components/newBoard';
 import useModal from '../../hooks/useModal';
 
 const UserPage = (props) => {
-	const {authenticate, user} = useContext(AuthContext);
+	const {user} = useContext(AuthContext);
 	const {boards, getBoards} = useContext(BoardContext);
 
     const [Modal,setShow] = useModal(false);
 
     useEffect(()=>{
         getBoards();
+    // eslint-disable-next-line
     }, []);
 
     const handleNewBoard = () =>{
@@ -26,17 +27,20 @@ const UserPage = (props) => {
   return (
     <Layout>
         <Modal>
-            <NewBoard/>
+            <NewBoard
+                setShow = {setShow}
+            />
         </Modal>
     	<Waves/>
         <Container>
-        	<Title>Tableros de {user.username}</Title>
+        	<Title>Tableros de {user.username}</Title>            
         	<ListOfBoards>
         		{boards.map( board => 
         		<BoardCard
         			key = {board._id}
                     title = {board.name}
                     id = {board._id}
+                    image = {board.mediumImageURL}
         			/>
         		)}
                 <Card onClick = {handleNewBoard}>
@@ -44,8 +48,8 @@ const UserPage = (props) => {
                 </Card>
 
         	</ListOfBoards>
-        </Container>
 
+        </Container>
     </Layout>
   )
 }

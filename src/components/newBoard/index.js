@@ -1,31 +1,47 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useContext} from 'react';
+import BoardContext from '../../context/board/boardContext';
 import {Title,Form , Input, Subtitle, Submit} from './style';
 import ListImages from '../listImages';
 import debounce from 'lodash/debounce';
 
-const NewBoard = (props) => {
+const NewBoard = ({setShow}) => {
 
 	const [name, setName] = useState('');
 	const [search, setSearch] = useState('');
 	const [keyword, saveKeyword] = useState('');
+    const [imageSelected, setImageSelected] = useState('');
+    const {createBoard} = useContext(BoardContext);
 
-
-    
     const debounceSaveKeyword = useCallback(
         debounce( nextValue => saveKeyword(nextValue) ,700)
       ,[]);
 
-    /*Se podria agregar algun spinner o algo que avise que se esta buscando
-    cuando se ejecute debounce que cambie a false el loading*/
     const handleSearch = e =>{
         setSearch(e.target.value)
         debounceSaveKeyword(e.target.value);
-    }
-    
+    }    
 
-  return (
-        	
-    	<Form> 
+    const handleSubmit = e =>{
+        e.preventDefault();
+        if(name.trim() === ''){
+            console.log('Alerta no eligio nombre');
+            return;
+        }
+        if(imageSelected === ''){
+            console.log('No seleccionó imagen');
+            return;
+        }
+        setShow(false);
+        createBoard({
+            name: name,
+            largeImageURL: imageSelected.largeImageURL,
+            mediumImageURL: imageSelected.webformatURL
+
+        });
+    }
+
+  return (        	
+    	<Form onSubmit={handleSubmit}> 
     		<Title>Crear un tablero</Title>
     		<Input 
     			type="text"
@@ -45,12 +61,12 @@ const NewBoard = (props) => {
     		<div>
     			<ListImages
     				keyword={keyword}
+                    imageSelected={imageSelected}
+                    setImageSelected={setImageSelected}
     			/>
     		</div>
     		<Submit type="submit">Crear</Submit>
     	</Form>
-    	
-    
   )
 }
 

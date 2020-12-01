@@ -17,10 +17,14 @@ const PrivateRoute = ({component: Component, ...props}) => {
       }
       setLoading(false); 
     }
-    getUser();
+    if(!authenticate){
+      getUser();
+    }else{
+      setLoading(false);
+    }    
 
     //eslint-disable-next-line
-	},[]);
+	},[authenticate]);
 
   return (
     loading?

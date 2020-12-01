@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 
 const useInfiniteScroll = (options = {} , visor) => {
 
@@ -17,7 +17,7 @@ const useInfiniteScroll = (options = {} , visor) => {
 
   observer.observe(visor.current); 
 
-},[options.root, visor]); 
+},[options, visor]); 
 
  return [isNearScreen];
 }

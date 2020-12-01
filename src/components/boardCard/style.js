@@ -4,7 +4,7 @@ export const Card = styled.div`
 	align-items: center;	
 	border-radius: 5px;
 	background: ${ ({theme}) => theme.colors.lightGrey};
-	background-image: url(${({img}) => img});
+	background-image: url(${({image}) => image});
 	background-position: center; 
 	background-size: cover; 
 	display: flex;
@@ -13,9 +13,11 @@ export const Card = styled.div`
 	max-width: 100%;
 	cursor: pointer;
 	transition: 0.3s;
+	position: relative;
 
 	&:hover{
-		transform: scale(1.05);
+		transform: scale(1.02);
+
 	}
 `;
 

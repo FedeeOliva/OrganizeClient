@@ -1,7 +1,12 @@
-import {GET_BOARDS, CREATE_BOARD} from '../types';
+import {GET_BOARD, GET_BOARDS, CREATE_BOARD} from '../types';
 
 export default (state, action) => {
 	switch(action.type){
+		case GET_BOARD:
+			return{
+				...state,
+				board: action.payload
+			}
 		case GET_BOARDS:
 			return {
 				...state,

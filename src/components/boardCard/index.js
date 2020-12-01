@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import {Card,Title} from './style';
 
 
-const BoardCard = ({title, id}) => {
+const BoardCard = ({title, id,image}) => {
 	//const {img} = board;
 	let history = useHistory();
 
@@ -14,7 +14,8 @@ const BoardCard = ({title, id}) => {
 	return (
 		<Card 
 			onClick={handleClick}
-		>			
+			image={image}
+		>				
 			<Title>{title}</Title>    	
 		</Card>
 	)

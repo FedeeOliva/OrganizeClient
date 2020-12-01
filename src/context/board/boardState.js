@@ -2,17 +2,29 @@ import React, {useReducer} from 'react';
 import boardContext from './boardContext';
 import boardReducer from './boardReducer';
 import Axios from '../../config/Axios';
-import tokenAuth from '../../config/tokenAuth';
-import {GET_BOARDS, CREATE_BOARD} from '../types';
+import {GET_BOARD, GET_BOARDS, CREATE_BOARD} from '../types';
 
 const BoardState = props => {
 
-	const initialState = {
-		boards: []
+	const initialState = {	
+		boards: [],
+		board: {}
 	}
 
 	const [state, dispatch] = useReducer(boardReducer, initialState);
 
+	const getBoard = async id =>{
+		try{
+			const response = await Axios.get(`/api/boards/${id}`);
+			dispatch({
+				type: GET_BOARD,
+				payload: response.data.board
+			});
+		}catch(error){
+			console.log(error.msg);
+		}
+	}
+	
 	const getBoards = async () =>{
 		try{
 			const response = await Axios.get('/api/boards');
@@ -42,6 +54,8 @@ const BoardState = props => {
     <boardContext.Provider
     	value={{
     			boards: state.boards,
+    			board: state.board,
+    			getBoard,
     			getBoards,
     			createBoard
     		}}
