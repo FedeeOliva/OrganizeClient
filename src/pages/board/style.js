@@ -6,7 +6,7 @@ export const Background = styled.div`
 	background-attachment: fixed;
 	background-position: center;
 	height: auto;
-	max-height: 100vh;
+	max-height: calc(100vh - 60px); /*alto del navbar*/
 	object-fit: cover;
 	width: 100%;
 `;

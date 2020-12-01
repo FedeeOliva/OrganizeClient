@@ -1,10 +1,12 @@
 import React from 'react';
-import {List, ListHeader, BtnAddTask} from './style';
+import {List,Wrapper, ListHeader, BtnAddTask} from './style';
 import Task from '../task';
 const ListaComponent = (props) => {
 	const texto = "Nada mejor que programar sin pensar ennn nada mas, bueno saluden Nada mejor que programar sin pensar en nada mas, bueno saluden"
   return (
-    <List>
+    <Wrapper>
+         <List>
+
         	<ListHeader>
         		<h6>To Do</h6>
         		<button>
@@ -25,14 +27,16 @@ const ListaComponent = (props) => {
                 <Task
                     text={"Limpiar"}
                 />
-
+                <Task
+                    text={texto }
+                />              
+                <Task
+                    text={"Limpiar"}
+                />
                 <Task
                     text={"Limpiar"}
                 />
 
-                <Task
-                    text={"Limpiar"}
-                />
                 <Task
                     text={"Limpiar"}
                 />
@@ -42,7 +46,8 @@ const ListaComponent = (props) => {
         		+ Agregar Tarea
         	</BtnAddTask>
        
-    </List>
+        </List>
+    </Wrapper>
   )
 }
 

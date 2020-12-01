@@ -5,7 +5,7 @@ export const Task = styled.li`
 	padding: 10px 20px 10px 10px;
 	min-height: 50px;
 	border-radius: 10px;
-	margin-top: 15px;
+	margin-bottom: 15px;
 	font-size: 0.8em;
 	position: relative;
 
