@@ -21,3 +21,13 @@ export const ToolsContainer = styled(Container)`
 		border: none;
 	}
 `;
+
+export const Form = styled.form`
+	& > button{
+		background: none;
+		border: none;
+		color: white;
+		padding: 0 5px;
+	}
+
+`;

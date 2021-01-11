@@ -40,7 +40,7 @@ const UserPage = (props) => {
         			key = {board._id}
                     title = {board.name}
                     id = {board._id}
-                    image = {board.mediumImageURL}
+                    imageID = {board.imageID}
         			/>
         		)}
                 <Card onClick = {handleNewBoard}>

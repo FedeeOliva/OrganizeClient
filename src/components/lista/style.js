@@ -42,10 +42,34 @@ export const ListHeader = styled.div`
 		border: none;
 	}
 `;
+export const BtnDelete = styled.button`
+	&:hover{
+		color: red;
+	}
+`;
 
 export const BtnAddTask = styled.button`
 	flex: 0 0 auto;
 	width: 100%;
 	height: 30px;
 	border: none;
+`;
+
+export const Input = styled.input`
+	border: none;
+	background: #EEE;
+	transition: 0.3s;
+
+	&:focus{
+		padding-left: 5px;
+		background: white;
+	}
+`;
+
+export const TextArea = styled.textarea`
+	width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    font-size: 0.8em;
 `;

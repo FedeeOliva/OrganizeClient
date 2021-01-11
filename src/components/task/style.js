@@ -28,3 +28,32 @@ export const BtnEdit = styled.button`
 	top: 5px;
 	display: none;
 `;
+
+export const SpanTextTask = styled.span`
+	word-wrap: break-word;
+`;
+
+export const TextArea = styled.textarea`
+	border: none;
+	width: 100%;
+	height: auto;
+	resize: none;
+`
+
+export const PopoverEdit = styled.div`
+	background: #EEE;
+	border-radius: 10px;
+	border: 1px solid rgba(0,0,0,0.3);
+	display: flex;
+	flex-direction: column;
+	min-width: 100px;
+
+
+	& > button{
+		border: none;
+		background: none;
+		color: #333;
+		width: 100%;
+		height: 30px;
+	}
+`;

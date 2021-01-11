@@ -34,8 +34,7 @@ const NewBoard = ({setShow}) => {
         setShow(false);
         createBoard({
             name: name,
-            largeImageURL: imageSelected.largeImageURL,
-            mediumImageURL: imageSelected.webformatURL
+            imageID: imageSelected.id
 
         });
     }
