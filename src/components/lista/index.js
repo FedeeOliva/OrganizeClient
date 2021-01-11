@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef} from 'react';
+import React, {useState,useEffect, useContext, useRef} from 'react';
 import BoardContext from '../../context/board/boardContext';
 import {List,Wrapper, ListHeader, 
     BtnAddTask, Input, TextArea, BtnDelete} from './style';
@@ -7,16 +7,26 @@ import swal from 'sweetalert';
 import { v4 as uuidv4 } from 'uuid';
 
 const ListaComponent = ({list}) => {
-    const {createTask, deleteList} = useContext(BoardContext);
+    const {createTask, deleteList, updateList} = useContext(BoardContext);
     const btnSubmitForm = useRef(null);
-    const {tasks} = list;
+    const {tasks} = list; // dsp pasarlo listLocal.tasks
 
-    const [name, setName] = useState(list.name);
+    const [listLocal, setListLocal ] = useState(list);
     const [taskText, setTaskText] = useState('');
     const [showAddTask, setShowAddTask] = useState(false);
 
+    useEffect(()=>{
+        setListLocal(list);
+    },[list]);
+
     const handleBlurChangeName = _ =>{
-        console.log('blur');
+        setListLocal(list)
+    }
+    const onChangeName = e => {
+        setListLocal({
+            ...listLocal,
+            name: e.target.value
+        })
     }
 
     const handleBlurAddTask = _ =>{
@@ -58,17 +68,29 @@ const ListaComponent = ({list}) => {
         })
     }
 
+    const onSubmitEditList = e =>{
+        e.preventDefault();
+        updateList(listLocal);
+        e.target.name.blur();
+    }
+
   return (
     <Wrapper>
          <List>
         	<ListHeader>
-                <form>
+                <form
+                    onSubmit = {onSubmitEditList}
+                    >
                     <Input type="text" 
-                        value={name} 
+                        value={listLocal.name} 
                         name="name"
-                        onChange={e => setName(e.target.value)}
+                        onChange={onChangeName}
                         onBlur = {handleBlurChangeName} 
                         />
+                    <button
+                        type="submit"
+                        style={{display: "none"}}
+                    ></button>
                 </form>        		
         		<BtnDelete
                     onClick = {handleDeleteList}

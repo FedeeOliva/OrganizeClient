@@ -5,7 +5,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 const TaskComponent = ({text, idList, idTask}) => {
 
-    const {deleteTask, updateList} = useContext(BoardContext);
+    const {deleteTask, updateTask} = useContext(BoardContext);
 	const[textTask, setTextTask] = useState(text);
 	const[editTask, setEditTask] = useState(false);
 	const btnSubmitForm = useRef(null);
@@ -24,7 +24,8 @@ const TaskComponent = ({text, idList, idTask}) => {
 
     const handleEditTask = e => {
     	e.preventDefault();
-    	//updateList(listId);
+    	updateTask(idList, idTask, textTask);
+        setEditTask(false);
     }
 
     

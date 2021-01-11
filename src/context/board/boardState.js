@@ -93,16 +93,15 @@ const BoardState = props => {
 		}
 	}
 
-	const updateList = idList => {
-			const url = `/api/lists?idBoard=${state.board._id}`;
-			const list = state.board.lists.find( li => li._id === idList);		
-		try{			
-			console.log(list);
-			Axios.put(url, list);
+	const updateList = list => {
+			const url = `/api/lists?idBoard=${state.board._id}`;	
 			dispatch({
 				type: UPDATE_LIST,
-				payload: idList
+				payload: list
 			});
+		try{
+			Axios.put(url, {list});
+			
 		}catch(error){
 			console.log(error.msg);
 		}
@@ -146,6 +145,27 @@ const BoardState = props => {
 		}
 	}
 
+	const updateTask = (idList, idTask, text) => {
+		const list = state.board.lists.find( list => list._id === idList);
+		list.tasks.map( task => {
+			if(task._id === idTask){
+				task.name = text
+			}				
+			return task;	
+		})
+		dispatch({
+				type: UPDATE_LIST,
+				payload: list
+		});
+		const url = `/api/lists?idBoard=${state.board._id}`;
+		try{
+			Axios.put(url, {list});
+			
+		}catch(error){
+			console.log(error.msg);
+		}
+	}
+
   return (
     <boardContext.Provider
     	value={{
@@ -160,7 +180,8 @@ const BoardState = props => {
     			deleteList,
     			createTask,
     			deleteTask,
-    			updateList
+    			updateList,
+    			updateTask
     		}}
     	>
     	{props.children}

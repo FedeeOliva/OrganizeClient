@@ -44,9 +44,19 @@ export default (state, action) => {
 				}
 			}
 		case UPDATE_LIST:
-		 	return state;
-		case CREATE_TASK:
-			/*Creo que es no es del todo correcto, pero funciona sin error*/			
+		 	return{
+		 		...state,
+		 		board:{
+		 			...state.board,
+		 			lists: state.board.lists.map( list => 
+		 			list._id === action.payload._id ?
+		 				action.payload
+		 			: 
+		 				list
+		 			)
+		 		}
+		 	}
+		case CREATE_TASK:			
 			state.board.lists.find(list => list._id === action.payload.idList)
 			.tasks.push(action.payload.task);
 			return state;
