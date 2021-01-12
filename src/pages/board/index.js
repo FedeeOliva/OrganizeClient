@@ -44,6 +44,7 @@ const BoardPage = (props) => {
                 <Lista
                     key = {list._id}
                     list = {list}
+                    id={list._id}
                 />
             )}
             </Listas>            

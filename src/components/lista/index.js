@@ -5,19 +5,34 @@ import {List,Wrapper, ListHeader,
 import Task from '../task';
 import swal from 'sweetalert';
 import { v4 as uuidv4 } from 'uuid';
+import Sortable from 'sortablejs';
 
 const ListaComponent = ({list}) => {
     const {createTask, deleteList, updateList} = useContext(BoardContext);
     const btnSubmitForm = useRef(null);
+    const listaDD = useRef(null);
     const {tasks} = list; // dsp pasarlo listLocal.tasks
 
     const [listLocal, setListLocal ] = useState(list);
     const [taskText, setTaskText] = useState('');
     const [showAddTask, setShowAddTask] = useState(false);
+    const [localTasks, setLocalTasks] = useState(listLocal.tasks);
 
     useEffect(()=>{
         setListLocal(list);
     },[list]);
+
+    useEffect(()=>{
+        if(listaDD.current){
+            Sortable.create(listaDD.current,{
+                group: "board",
+                onEnd: function(e){
+                    console.log(e.item.id);
+                    console.log(listaDD.current);
+                }
+            });
+        }
+    },[listaDD.current]);
 
     const handleBlurChangeName = _ =>{
         setListLocal(list)
@@ -74,6 +89,9 @@ const ListaComponent = ({list}) => {
         e.target.name.blur();
     }
 
+    
+
+
   return (
     <Wrapper>
          <List>
@@ -98,8 +116,8 @@ const ListaComponent = ({list}) => {
         			<i className="far fa-times-circle"></i>
         		</BtnDelete>    		
         	</ListHeader>    	
-        	<ul>
-        		{tasks && tasks.map( task => 
+        	<ul ref={listaDD}>
+        		{localTasks && localTasks.map( task => 
                     <Task
                         key={task._id}
                         text={task.name}

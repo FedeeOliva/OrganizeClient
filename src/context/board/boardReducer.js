@@ -16,6 +16,9 @@ export default (state, action) => {
 			return {
 				...state,
 				boards: action.payload,
+				board: {
+					lists: []
+				},
 				error: false
 			}
 		case CREATE_BOARD:

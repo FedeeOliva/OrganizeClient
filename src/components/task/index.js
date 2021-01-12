@@ -31,7 +31,7 @@ const TaskComponent = ({text, idList, idTask}) => {
     
 
   return (
-    <Task>
+    <Task id={idTask}>
     	{editTask?
     		<form
     			onSubmit = {handleEditTask}
