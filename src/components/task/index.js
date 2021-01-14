@@ -24,8 +24,8 @@ const TaskComponent = ({text, idList, idTask}) => {
 
     const handleEditTask = e => {
     	e.preventDefault();
-    	updateTask(idList, idTask, textTask);
         setEditTask(false);
+    	updateTask(idList, idTask, textTask);        
     }
 
     

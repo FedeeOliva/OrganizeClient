@@ -166,6 +166,24 @@ const BoardState = props => {
 		}
 	}
 
+	//D&D
+	const updateTasksInList = (idList, tasks) =>{
+		console.log('dyd');
+		let list = state.board.lists.find( list => list._id === idList);
+		list.tasks = tasks;
+		dispatch({
+				type: UPDATE_LIST,
+				payload: list
+		});
+		const url = `/api/lists?idBoard=${state.board._id}`;
+		try{
+			Axios.put(url, {list});
+			
+		}catch(error){
+			console.log(error.msg);
+		}
+	}
+
   return (
     <boardContext.Provider
     	value={{
@@ -181,7 +199,8 @@ const BoardState = props => {
     			createTask,
     			deleteTask,
     			updateList,
-    			updateTask
+    			updateTask,
+    			updateTasksInList
     		}}
     	>
     	{props.children}

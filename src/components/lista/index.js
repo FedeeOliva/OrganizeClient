@@ -5,10 +5,10 @@ import {List,Wrapper, ListHeader,
 import Task from '../task';
 import swal from 'sweetalert';
 import { v4 as uuidv4 } from 'uuid';
-import Sortable from 'sortablejs';
+import { ReactSortable } from "react-sortablejs";
 
 const ListaComponent = ({list}) => {
-    const {createTask, deleteList, updateList} = useContext(BoardContext);
+    const {createTask, deleteList, updateList, updateTasksInList} = useContext(BoardContext);
     const btnSubmitForm = useRef(null);
     const listaDD = useRef(null);
     const {tasks} = list; // dsp pasarlo listLocal.tasks
@@ -16,23 +16,18 @@ const ListaComponent = ({list}) => {
     const [listLocal, setListLocal ] = useState(list);
     const [taskText, setTaskText] = useState('');
     const [showAddTask, setShowAddTask] = useState(false);
-    const [localTasks, setLocalTasks] = useState(listLocal.tasks);
+    const [localTasks, setLocalTasks] = useState(tasks);
 
     useEffect(()=>{
         setListLocal(list);
+        setLocalTasks(tasks)
     },[list]);
 
     useEffect(()=>{
-        if(listaDD.current){
-            Sortable.create(listaDD.current,{
-                group: "board",
-                onEnd: function(e){
-                    console.log(e.item.id);
-                    console.log(listaDD.current);
-                }
-            });
-        }
-    },[listaDD.current]);
+        console.log('setLocalTasks');
+        setLocalTasks(tasks)
+    },[tasks])
+
 
     const handleBlurChangeName = _ =>{
         setListLocal(list)
@@ -89,9 +84,6 @@ const ListaComponent = ({list}) => {
         e.target.name.blur();
     }
 
-    
-
-
   return (
     <Wrapper>
          <List>
@@ -117,14 +109,21 @@ const ListaComponent = ({list}) => {
         		</BtnDelete>    		
         	</ListHeader>    	
         	<ul ref={listaDD}>
-        		{localTasks && localTasks.map( task => 
-                    <Task
-                        key={task._id}
-                        text={task.name}
-                        idList = {list._id}
-                        idTask = {task._id}
-                        />
-                    )}
+                <ReactSortable
+                    list={localTasks}
+                    setList={setLocalTasks}
+                    group="board"
+                    onSort={() => updateTasksInList(list._id, localTasks)}
+                    >
+            		{localTasks && localTasks.map( task => 
+                        <Task
+                            key={task._id}
+                            text={task.name}
+                            idList = {list._id}
+                            idTask = {task._id}
+                            />
+                        )}
+                </ReactSortable>
 
                 {showAddTask &&
                     <form
