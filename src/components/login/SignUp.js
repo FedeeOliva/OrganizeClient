@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {Title,LoginContainer, Form, MyLink as Link,
-		InputGroup, Input, Icon ,IconGroup, Text} from './style';
+		InputGroup, Input, Icon} from './style';
 import {Button} from '../button';
 import AuthContext from '../../context/authenticate/authContext';
 import useSpinner from '../../hooks/useSpinner';
@@ -115,13 +115,7 @@ const Registry = ({setSingUp}) => {
                         Registrarse
                     </Button>          
                 </Form>
-                <Link to="#" onClick={setLogin}>¿Ya tienes cuenta?</Link>
-                    <Text>Registrarse con:</Text>
-                <IconGroup>
-                    <a href="https://www.facebook.com/"><Icon className="fab fa-facebook-square"></Icon></a>
-                    <a href="https://www.facebook.com/"><Icon className="fab fa-twitter-square"></Icon></a>
-                    <a href="https://www.facebook.com/"><Icon className="fab fa-google"></Icon></a>
-                </IconGroup>
+                <Link to="#" onClick={setLogin}>¿Ya tienes cuenta?</Link>                   
             </>
                 }
     </LoginContainer>  )

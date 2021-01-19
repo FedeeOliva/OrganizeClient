@@ -62,6 +62,7 @@ const AuthState = props => {
 			await localStorage.setItem('token', response.data.token);
 			await getUserAuth();
 		}catch(error){
+			console.log(error.msg);
 			dispatch({
 				type: FAIL_AUTHENTICATE,
 				payload: error.msg

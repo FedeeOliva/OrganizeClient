@@ -16,7 +16,8 @@ const BoardPage = (props) => {
     const [image, setImage] = useState('');
     /**/
 	useEffect( () => {
-		getBoard(id)      
+		getBoard(id)
+    // eslint-disable-next-line      
 	},[]);
 
     useEffect(() =>{

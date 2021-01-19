@@ -5,7 +5,7 @@ const FooterComponent = (props) => {
   return (
     <Footer>
     	<FooterContainer>
-	    	<span>© Copyright 2020 | Organize.</span>
+	    	<span>Todos los derechos reservados | Organize.</span>
 	    	<span>Desarrollado por Federico Oliva | Desarrolador Web Freelance</span>    		
     	</FooterContainer>
     </Footer>

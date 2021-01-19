@@ -20,14 +20,8 @@ const ListaComponent = ({list}) => {
 
     useEffect(()=>{
         setListLocal(list);
-        setLocalTasks(tasks)
-    },[list]);
-
-    useEffect(()=>{
-        console.log('setLocalTasks');
-        setLocalTasks(tasks)
-    },[tasks])
-
+        setLocalTasks(list.tasks)
+    },[list, updateList]);
 
     const handleBlurChangeName = _ =>{
         setListLocal(list)
@@ -113,6 +107,7 @@ const ListaComponent = ({list}) => {
                     list={localTasks}
                     setList={setLocalTasks}
                     group="board"
+                    filter=".ignore-drag"
                     onSort={() => updateTasksInList(list._id, localTasks)}
                     >
             		{localTasks && localTasks.map( task => 

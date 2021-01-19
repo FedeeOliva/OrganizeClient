@@ -1,7 +1,6 @@
 import React, {useState, useContext, useRef} from 'react';
 import BoardContext from '../../context/board/boardContext';
-import {Task, SpanTextTask, BtnEdit, TextArea, PopoverEdit} from './style';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import {Task, SpanTextTask,TextArea,BtnOption, OptionsButtons} from './style';
 
 const TaskComponent = ({text, idList, idTask}) => {
 
@@ -34,7 +33,7 @@ const TaskComponent = ({text, idList, idTask}) => {
     <Task id={idTask}>
     	{editTask?
     		<form
-    			onSubmit = {handleEditTask}
+    			onSubmit = {handleEditTask}                
     			>
     			<TextArea 
     				onChange={ e => setTextTask(e.target.value)}
@@ -42,6 +41,7 @@ const TaskComponent = ({text, idList, idTask}) => {
     				onKeyPress={handleKeyPress}
     				onBlur = {handleOnBlur}
     				autoFocus
+                    className="ignore-drag"
     				></TextArea>
     			<button
                     ref={btnSubmitForm}
@@ -51,21 +51,19 @@ const TaskComponent = ({text, idList, idTask}) => {
                 </button>
     		</form>
     	:
-    	<>
-    		<OverlayTrigger trigger="click" placement="right" overlay={
-    			<PopoverEdit>
-    				<button
-    					onClick = {() => setEditTask(true)}
-    					>Editar</button>
-    				<button
-                        onClick = {() => deleteTask(idList,idTask)}
-                        >Eliminar</button>
-    			</PopoverEdit>
-    			}>
-		    	<BtnEdit>
-		    		<i className="fas fa-pencil-alt"></i>
-		    	</BtnEdit>
-	    	</OverlayTrigger>
+    	<>  
+            <OptionsButtons className="buttons">
+    		    <BtnOption
+                    onClick={() => setEditTask(true)}
+                    >
+    		    	<i className="fas fa-pencil-alt"></i>
+    		    </BtnOption>
+                <BtnOption
+                    onClick={() => deleteTask(idList, idTask)}
+                    >
+                    <i className="far fa-times-circle"></i>
+                </BtnOption>	
+            </OptionsButtons> 		
 	    	<SpanTextTask>
 	    		{textTask}
 	    	</SpanTextTask>
