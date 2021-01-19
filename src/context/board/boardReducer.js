@@ -1,7 +1,7 @@
 import {GET_BOARD, GET_BOARDS, CREATE_BOARD,
 		DELETE_BOARD, UPDATE_BOARD, CREATE_LIST, 
 		DELETE_LIST,CREATE_TASK, UPDATE_LIST, DELETE_TASK,
-		THEREIS_ERROR} from '../types';
+		THEREIS_ERROR, LOG_OUT_BOARD} from '../types';
 
 export default (state, action) => {
 	switch(action.type){
@@ -69,6 +69,14 @@ export default (state, action) => {
 				...state,
 				board: {...state.board,
 					lists: action.payload
+				}
+			}
+		case LOG_OUT_BOARD:
+			return{
+				...state,
+				boards: [],
+				board: {
+					lists: []
 				}
 			}
 

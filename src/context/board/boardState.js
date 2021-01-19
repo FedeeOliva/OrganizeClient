@@ -4,9 +4,10 @@ import boardReducer from './boardReducer';
 import Axios from '../../config/Axios';
 
 import {GET_BOARD, GET_BOARDS, 
-	CREATE_BOARD,UPDATE_BOARD, DELETE_BOARD,
+	CREATE_BOARD, DELETE_BOARD,
 	CREATE_LIST, DELETE_LIST, CREATE_TASK,
-	DELETE_TASK, UPDATE_LIST, THEREIS_ERROR} from '../types';
+	DELETE_TASK, UPDATE_LIST, THEREIS_ERROR,
+	LOG_OUT_BOARD} from '../types';
 
 const BoardState = props => {
 
@@ -168,7 +169,6 @@ const BoardState = props => {
 
 	//D&D
 	const updateTasksInList = (idList, tasks) =>{
-		console.log('dyd');
 		let list = state.board.lists.find( list => list._id === idList);
 		list.tasks = tasks;
 		dispatch({
@@ -183,6 +183,14 @@ const BoardState = props => {
 			console.log(error.msg);
 		}
 	}
+
+	/*Pone los tableros en null para que al inicar otra sesion
+	no se muestren los tableros del usuario anterior*/
+	const logOutBoard = () => {
+		dispatch({
+			type: LOG_OUT_BOARD
+		})
+	}	
 
   return (
     <boardContext.Provider
@@ -200,7 +208,8 @@ const BoardState = props => {
     			deleteTask,
     			updateList,
     			updateTask,
-    			updateTasksInList
+    			updateTasksInList,
+    			logOutBoard
     		}}
     	>
     	{props.children}

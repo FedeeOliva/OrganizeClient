@@ -3,13 +3,10 @@ import {Title,LoginContainer, Form, MyLink as Link,
 		InputGroup, Input, Icon} from './style';
 import {Button} from '../button';
 import AuthContext from '../../context/authenticate/authContext';
-import useSpinner from '../../hooks/useSpinner';
 const Registry = ({setSingUp}) => {
 
     const authContext = useContext(AuthContext);
-    const {regUser} = authContext;
-
-    const [Spinner, loading, setLoading] = useSpinner();
+    const {loading,error, msg, regUser, showAlertError} = authContext;
 
     const [data, setData] = useState({
         username: '',
@@ -40,24 +37,20 @@ const Registry = ({setSingUp}) => {
             rePassword.trim() === ''
             ){
             //mostrar alerta error
-            console.log('Todos los campos son obligatorios');
+            showAlertError('Todos los campos son obligatorios')
             return;
         }
 
         if(password.length < 6){
-            console.log('La contraseña debe tener al menos 6 careacteres');
+            showAlertError('La contraseña debe tener al menos 6 careacteres')
             return;
         }
 
         if(password !== rePassword){
-            console.log('Las contraseñas no coinciden');
+            showAlertError('Las contraseñas no coinciden')
             return;
         }
 
-        /*Me parece que no es necesario hacer async la funcion y tampoco
-        volver a false el loading, ya que la pagina va a cambiar y si vuelve
-        el estado ya estara por defecto en falso*/
-        setLoading(true);
        regUser({
             username,
             email,
@@ -70,7 +63,9 @@ const Registry = ({setSingUp}) => {
 
     	{
         loading?
-            <Spinner/>
+             <div className="spinner-border" role="status">
+                 <span className="sr-only">Loading...</span>
+            </div>
         :
         <>
             <Title>Registrarse</Title>
@@ -117,6 +112,13 @@ const Registry = ({setSingUp}) => {
                 </Form>
                 <Link to="#" onClick={setLogin}>¿Ya tienes cuenta?</Link>                   
             </>
+                }
+            {error? 
+                <div className="alert alert-danger" role="alert">
+                    {msg}
+                 </div>
+                : null
+
                 }
     </LoginContainer>  )
 }

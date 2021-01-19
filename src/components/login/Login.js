@@ -3,16 +3,11 @@ import {Title,LoginContainer, Form, MyLink as Link,
 		InputGroup, Input, Icon} from './style';
 import {Button} from '../button';
 import AuthContext from '../../context/authenticate/authContext';
-import useSpinner from '../../hooks/useSpinner';
-
-
 
 const Login = ({setSingUp}) => {
 
     const authContext = useContext(AuthContext);
-    const {logIn} = authContext;
-
-    const [Spinner, loading, setLoading] = useSpinner();
+    const {loading, error, msg, logIn} = authContext;
     const [data, setData] = useState({
         email: '',
         password: ''
@@ -30,7 +25,6 @@ const Login = ({setSingUp}) => {
         if(email.trim() === '' || password.trim() === ''){
             console.log("Todos los campos son obligatorios");
         }
-        setLoading(true);
         logIn({email,password});
     }
 
@@ -39,7 +33,9 @@ const Login = ({setSingUp}) => {
      <LoginContainer>
     	{
             loading?
-             <Spinner/>
+             <div className="spinner-border" role="status">
+                 <span className="sr-only">Loading...</span>
+            </div>
             :
             
             <>
@@ -73,6 +69,11 @@ const Login = ({setSingUp}) => {
                 <Link to="#">¿Olvidaste tu contraseña?</Link>
                 </>
                 }
+                {error? 
+                    <div className="alert alert-danger" role="alert">
+                      {msg}
+                    </div>
+                 : null}
     </LoginContainer>
   )
 }

@@ -19,6 +19,7 @@ const ListImages = ({keyword,imageSelected, setImageSelected}) => {
 		if(isNearScreen){
 			setPage( prev => prev+1);
 		}
+		// eslint-disable-next-line
 	} ,[isNearScreen]);
 
 	const handleImageSelect = id =>{

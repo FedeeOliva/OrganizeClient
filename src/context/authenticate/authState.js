@@ -4,7 +4,12 @@ import authReducer from './authReducer';
 import Axios from '../../config/Axios';
 import tokenAuth from '../../config/tokenAuth';
 import {FAIL_AUTHENTICATE,
-		GET_USER, LOG_OUT} from '../types';
+		GET_USER,
+		GET_USER_SUCCESS,
+		GET_USER_FAIL, 
+		LOG_OUT,
+		SHOW_ALERT_ERROR
+	} from '../types';
 
 
 const AuthState = props => {
@@ -12,6 +17,8 @@ const AuthState = props => {
 	const initialState = {
 		authenticate: false,
 		user: null,
+		loading: true,
+		error: false,
 		msg: null,
 	}
 
@@ -27,34 +34,32 @@ const AuthState = props => {
 		}catch(error){
 			dispatch({
 				type: FAIL_AUTHENTICATE,
-				payload: error.msg
+				payload: error.response.data.msg
 			})
 		}		
 	}
 
 	const getUserAuth = async () =>{
+		dispatch({
+			type: GET_USER
+		});
 		try{
 			const token = await localStorage.getItem('token');		
 			await tokenAuth(token);			
 			const response = await Axios.get('/api/auth');
 			dispatch({
-				type: GET_USER,
+				type: GET_USER_SUCCESS,
 				payload: response.data.user
 			});
 		}catch(error){
 			dispatch({
-				type: FAIL_AUTHENTICATE,
-				payload: error.msg
+				type: GET_USER_FAIL,
+				payload: error.response.data.msg
 			})
 		}	
 	}
 
-	/*
-	Funcion similar a getUserAuth sin el dispatch
-	const isAuth = async () =>{
-	
-	}
-	*/
+
 
 	const logIn = async data =>{
 		try{
@@ -62,10 +67,9 @@ const AuthState = props => {
 			await localStorage.setItem('token', response.data.token);
 			await getUserAuth();
 		}catch(error){
-			console.log(error.msg);
 			dispatch({
 				type: FAIL_AUTHENTICATE,
-				payload: error.msg
+				payload: error.response.data.msg
 			})
 		}
 	}
@@ -78,15 +82,26 @@ const AuthState = props => {
 		})
 	}
 
+	const showAlertError = msg => {
+		dispatch({
+			type: SHOW_ALERT_ERROR,
+			payload: msg
+		})
+	}
+
   return (
     <authContext.Provider
     	value={{
     		authenticate: state.authenticate,
     		user: state.user,
+    		loading: state.loading,
+    		msg: state.msg,
+    		error: state.error,
     		regUser,
     		logIn,
     		getUserAuth,
-    		logOut
+    		logOut,
+    		showAlertError
     		}}
     	>
     	{props.children}

@@ -5,32 +5,37 @@ import Waves from '../../components/waves';
 import {Section, Portada, Title, Image} from './style';
 import PortadaImage from '../../assets/portada.svg'
 import AuthContext from '../../context/authenticate/authContext';
-import useSpinner from '../../hooks/useSpinner';
 
 const LoginPage = (props) => {
 
-    const {authenticate, getUserAuth} = useContext(AuthContext);
-    const [Spinner, loading, setLoading ,Centered] = useSpinner(true);
+    const {authenticate, error, loading, getUserAuth} = useContext(AuthContext);
     
     useEffect(()=>{     
-        const isAuth = async () =>{            
-            await getUserAuth();            
-            setLoading(false);                                  
-        }
+       getUserAuth()        
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
         if(authenticate){
             props.history.push('/user');
-        }else{
-            if(localStorage.getItem('token')) isAuth(); 
-            else setLoading(false);
-        }   
+        }
         // eslint-disable-next-line
-    }, [authenticate]);    
+    },[authenticate]);
+
+    useEffect(() => {
+        if(error){
+            props.history.push('/');
+        }
+        // eslint-disable-next-line
+    },[error]);       
 
   return (
     loading? 
-    <Centered>
-        <Spinner/>
-    </Centered>
+    <div className="d-flex justify-content-center align-items-center min-vh-100">
+        <div className="spinner-border" role="status">
+             <span className="sr-only">Loading...</span>
+        </div>
+    </div>    
     :
     <Layout>
     	<Waves/>
