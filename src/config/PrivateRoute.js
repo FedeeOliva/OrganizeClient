@@ -1,41 +1,31 @@
 import React, {useContext, useEffect} from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import AuthContext from '../context/authenticate/authContext';
-import useSpinner from '../hooks/useSpinner';
+import Spinner from 'react-bootstrap/Spinner';
 
 const PrivateRoute = ({component: Component, ...props}) => {
 
-	const {authenticate, getUserAuth } =  useContext(AuthContext);
-  const [Spinner, loading, setLoading ,Centered] = useSpinner(true);
+	const {authenticate, loading, getUserAuth } =  useContext(AuthContext);
 
 	useEffect(()=>{
-    const getUser = async () =>{
-      try{
-        await getUserAuth();        
-      }catch(error){
-        console.log(error);
-      }
-      setLoading(false); 
-    }
     if(!authenticate){
-      getUser();
-    }else{
-      setLoading(false);
-    }    
-
+      getUserAuth();
+    }
     //eslint-disable-next-line
-	},[authenticate]);
+	},[]);
 
   return (
     loading?
-    <Centered>
-          <Spinner/>
-    </Centered>
+    <div className="d-flex justify-content-center align-items-center min-vh-100">
+          <Spinner animation="border" role="status">
+              <span className="sr-only">Cargando...</span>
+          </Spinner>
+    </div>
     :
-    <Route {...props} render = { props => !authenticate ? (        
-    		<Redirect to="/" />
-    	): (
+    <Route {...props} render = { props => authenticate && !loading ? (        
     		<Component {...props}/>
+    	): (
+    		<Redirect to="/" />
     	)}/>
 
 

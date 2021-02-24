@@ -1,7 +1,8 @@
-import {GET_USER, 
-	FAIL_AUTHENTICATE,
+import {
+	GET_USER, 
 	GET_USER_SUCCESS,
 	GET_USER_FAIL,
+	FAIL_AUTHENTICATE,
 	LOG_OUT,
 	SHOW_ALERT_ERROR
 	} from '../types';
@@ -25,11 +26,11 @@ export default (state, action) => {
 		case GET_USER_SUCCESS:
 			return{
 				...state,
+				loading: false,
 				authenticate: true,
 				user: action.payload,
 				msg: null,
 				error: false,
-				loading: false
 			}
 		case GET_USER_FAIL:
 			return{

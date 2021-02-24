@@ -17,7 +17,7 @@ const AuthState = props => {
 	const initialState = {
 		authenticate: false,
 		user: null,
-		loading: true,
+		loading: false,
 		error: false,
 		msg: null,
 	}
@@ -40,6 +40,7 @@ const AuthState = props => {
 	}
 
 	const getUserAuth = async () =>{
+		console.log('getUserAuth');
 		dispatch({
 			type: GET_USER
 		});
