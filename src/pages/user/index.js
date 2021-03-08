@@ -1,8 +1,8 @@
 import React, {useContext, useEffect} from 'react';
+import {ListOfBoards, Title, Container} from './style';
 import Layout from '../../components/layout';
 import BoardContext from '../../context/board/boardContext';
 import AuthContext from '../../context/authenticate/authContext';
-import {ListOfBoards, Title, Container} from './style';
 import BoardCard from '../../components/boardCard';
 import Waves from '../../components/waves';
 import {Card} from '../../components/boardCard/style';
@@ -11,7 +11,7 @@ import useModal from '../../hooks/useModal';
 
 const UserPage = (props) => {
 	const {user} = useContext(AuthContext);
-	const {boards, getBoards} = useContext(BoardContext);
+	const {boards, getBoards, isLoading} = useContext(BoardContext);
 
     const [Modal,setShow] = useModal(false);
 
@@ -44,7 +44,13 @@ const UserPage = (props) => {
         			/>
         		)}
                 <Card onClick = {handleNewBoard}>
-                    Nuevo tablero
+                    {isLoading?
+                        <div className="spinner-border" role="status">
+                          <span className="sr-only">Loading...</span>
+                        </div>
+                    :
+                        'Nuevo Tablero'
+                    }
                 </Card>
 
         	</ListOfBoards>

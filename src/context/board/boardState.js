@@ -3,10 +3,24 @@ import boardContext from './boardContext';
 import boardReducer from './boardReducer';
 import Axios from '../../config/Axios';
 
-import {GET_BOARD, GET_BOARDS, 
-	CREATE_BOARD, DELETE_BOARD,
-	CREATE_LIST, DELETE_LIST, CREATE_TASK,
-	DELETE_TASK, UPDATE_LIST, THEREIS_ERROR,
+import {
+	GET_BOARDS,
+	GET_BOARDS_SUCCESS,
+	GET_BOARDS_ERROR,
+	GET_BOARD,
+	GET_BOARD_SUCCESS,
+	GET_BOARD_ERROR,
+	CREATE_BOARD,
+	CREATE_BOARD_SUCCESS,
+	CREATE_BOARD_ERROR,
+	DELETE_BOARD,
+	DELETE_BOARD_SUCCESS,
+	DELETE_BOARD_ERROR,
+	CREATE_LIST, 
+	DELETE_LIST, 
+	CREATE_TASK,
+	DELETE_TASK, 
+	UPDATE_LIST, 
 	LOG_OUT_BOARD} from '../types';
 
 const BoardState = props => {
@@ -16,54 +30,78 @@ const BoardState = props => {
 		board: {
 			lists: []
 		},
-		error: false
+		error: false,
+		isLoading: false,
 	}
 
 	const [state, dispatch] = useReducer(boardReducer, initialState);
 
 	const getBoard = async id =>{
+		dispatch({type: GET_BOARD})
 		try{
 			const response = await Axios.get(`/api/boards/${id}`);
 			dispatch({
-				type: GET_BOARD,
+				type: GET_BOARD_SUCCESS,
 				payload: response.data.board
 			});
 		}catch(error){
+			console.log(error);
 			dispatch({
-				type: THEREIS_ERROR
+				type: GET_BOARD_ERROR,
+				payload: 'Hubo un problema al buscar el tablero'
 			})		
 		}
 	}
 	
 	const getBoards = async () =>{
+		dispatch({type: GET_BOARDS})
 		try{
-			const response = await Axios.get('/api/boards');
+			const response = await Axios.get(`/api/boards`);
 			dispatch({
-				type: GET_BOARDS,
+				type: GET_BOARDS_SUCCESS,
 				payload: response.data.boards
 			});
 		}catch(error){
-			console.log(error.msg);
+			console.log(error);
+			dispatch({
+				type: GET_BOARDS_ERROR,
+				payload: 'Hubo un problema al encontrar los tableros'
+			})	
 		}
 	}
 
 	const createBoard = async data =>{
+		dispatch({type: CREATE_BOARD})
 		try{
 			const response = await Axios.post('/api/boards', data);
 			dispatch({
-				type: CREATE_BOARD,
+				type: CREATE_BOARD_SUCCESS,
 				payload: response.data.board
 			});
 		}catch(error){
 			console.log(error.msg);
+			dispatch({
+				type: CREATE_BOARD_ERROR,
+				payload: 'Error al crear el tablero'
+			})
 		}
 	}
 
 	const deleteBoard = async () => {
-		await Axios.delete(`/api/boards/${state.board._id}`);
-		dispatch({
-			type: DELETE_BOARD
-		})
+		dispatch({type: DELETE_BOARD});
+		try{
+			await Axios.delete(`/api/boards/${state.board._id}`);
+			dispatch({
+				type: DELETE_BOARD_SUCCESS
+			})
+
+		}catch(error){
+			dispatch({
+				type: DELETE_BOARD_ERROR,
+				payload: 'Error al eliminar el tablero'
+			})
+
+		}
 		return true;
 	}
 
@@ -198,6 +236,7 @@ const BoardState = props => {
     			boards: state.boards,
     			board: state.board,
     			error: state.error,
+    			isLoading: state.isLoading,
     			getBoard,
     			getBoards,
     			createBoard,

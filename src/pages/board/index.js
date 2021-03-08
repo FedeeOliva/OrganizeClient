@@ -10,7 +10,7 @@ import {Background, Listas} from './style';
 
 const BoardPage = (props) => {
 	const {id} = useParams()
-	const {board, error, getBoard} = useContext(BoardContext);
+	const {board, error, isLoading, getBoard} = useContext(BoardContext);
     const {lists} = board;
 
     const [image, setImage] = useState('');
@@ -32,25 +32,33 @@ const BoardPage = (props) => {
 
   return (
     <Layout footer={false}>    	
-    	<Background image={image}>
-    		<Tools/>
-            {error?
-                <div class="alert alert-danger" role="alert">
-                  Este tablero no existe o ha sido eliminado.
-                <Link to="/user" class="alert-link"> Regresa a tus tableros</Link>
+    	{
+        isLoading?
+            <div className="min-vh-100 d-flex justify-content-center align-items-center">
+                <div className="spinner-border" role="status">
+                  <span className="sr-only">Cargando...</span>
                 </div>
-            :
-            <Listas>
-            { lists && lists.map( list => 
-                <Lista
-                    key = {list._id}
-                    list = {list}
-                    id={list._id}
-                />
-            )}
-            </Listas>            
-            }			
-    	</Background>  	
+            </div>
+        :
+            <Background image={image}>
+        		<Tools/>
+                {error?
+                    <div class="alert alert-danger" role="alert">
+                      Este tablero no existe o ha sido eliminado.
+                    <Link to="/user" class="alert-link"> Regresa a tus tableros</Link>
+                    </div>
+                :
+                <Listas>
+                { lists && lists.map( list => 
+                    <Lista
+                        key = {list._id}
+                        list = {list}
+                        id={list._id}
+                    />
+                )}
+                </Listas>            
+                }			
+        	</Background>  	}
     </Layout>
   )
 }

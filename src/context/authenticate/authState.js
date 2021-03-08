@@ -17,7 +17,7 @@ const AuthState = props => {
 	const initialState = {
 		authenticate: false,
 		user: null,
-		loading: false,
+		loading: true,
 		error: false,
 		msg: null,
 	}

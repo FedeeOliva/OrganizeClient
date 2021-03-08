@@ -1,37 +1,75 @@
-import {GET_BOARD, GET_BOARDS, CREATE_BOARD,
-		DELETE_BOARD, UPDATE_BOARD, CREATE_LIST, 
-		DELETE_LIST,CREATE_TASK, UPDATE_LIST, DELETE_TASK,
-		THEREIS_ERROR, LOG_OUT_BOARD} from '../types';
+import {
+	GET_BOARDS,
+	GET_BOARDS_SUCCESS,
+	GET_BOARDS_ERROR,
+	GET_BOARD,
+	GET_BOARD_SUCCESS,
+	GET_BOARD_ERROR,
+	CREATE_BOARD,
+	CREATE_BOARD_SUCCESS,
+	CREATE_BOARD_ERROR,
+	DELETE_BOARD,
+	DELETE_BOARD_SUCCESS,
+	DELETE_BOARD_ERROR,
+	UPDATE_BOARD,
+	CREATE_LIST, 
+	DELETE_LIST,
+	CREATE_TASK,
+	UPDATE_LIST,
+	DELETE_TASK,
+	LOG_OUT_BOARD} from '../types';
 
 export default (state, action) => {
 	switch(action.type){
-		case UPDATE_BOARD:
 		case GET_BOARD:
+		case GET_BOARDS:
+		case CREATE_BOARD:
+		case DELETE_BOARD:
+		case UPDATE_BOARD:
+			return{
+				...state,
+				isLoading: true,
+				error: false,
+			}
+		case GET_BOARD_ERROR:
+		case GET_BOARDS_ERROR:
+		case CREATE_BOARD_ERROR:
+		case DELETE_BOARD_ERROR:
+			return{
+				...state,
+				isLoading: false,
+				error: action.payload
+			}
+		case GET_BOARD_SUCCESS:
 			return{
 				...state,
 				board: action.payload,
+				isLoading: false,
 				error: false
 			}
-		case GET_BOARDS:
+		case GET_BOARDS_SUCCESS:
 			return {
 				...state,
 				boards: action.payload,
 				board: {
 					lists: []
 				},
+				isLoading: false,
 				error: false
 			}
-		case CREATE_BOARD:
+		case CREATE_BOARD_SUCCESS:
 			return{
 				...state,
-				boards: [...state.boards, action.payload]
+				boards: [...state.boards, action.payload],
+				isLoading: false,
 			}
-		case DELETE_BOARD:
+		case DELETE_BOARD_SUCCESS:
 			 return{
 			 	...state,
 			 	board: {
 			 		lists: []
-			 	}
+			 	},
+			 	isLoading: false,
 			 }
 		case CREATE_LIST:
 			return{
@@ -43,7 +81,8 @@ export default (state, action) => {
 			return{
 				...state,
 				board: {...state.board,
-					lists: state.board.lists.filter(list => list._id !== action.payload)
+					lists: state.board.lists.filter(list => 
+						list._id !== action.payload)
 				}
 			}
 		case UPDATE_LIST:
@@ -78,12 +117,6 @@ export default (state, action) => {
 				board: {
 					lists: []
 				}
-			}
-
-		case THEREIS_ERROR:
-			return{
-				...state,
-				error: true
 			}
 		default:
 			return state;

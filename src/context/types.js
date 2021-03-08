@@ -7,10 +7,24 @@ export const SHOW_ALERT_ERROR = "SHOW_ALERT_ERROR";
 
 //board
 export const GET_BOARDS = "GET_BOARDS";
+export const GET_BOARDS_SUCCESS = "GET_BOARDS_SUCCESS"
+export const GET_BOARDS_ERROR = "GET_BOARDS_ERROR";
+
 export const GET_BOARD = "GET_BOARD";
+export const GET_BOARD_SUCCESS = "GET_BOARD_SUCCESS";
+export const GET_BOARD_ERROR = "GET_BOARD_ERROR";
+
 export const CREATE_BOARD = "CREATE_BOARD";
+export const CREATE_BOARD_SUCCESS = "CREATE_BOARD_SUCCESS";
+export const CREATE_BOARD_ERROR = "CREATE_BOARD_ERROR";
+
+
 export const DELETE_BOARD = "DELETE_BOARD";
+export const DELETE_BOARD_SUCCESS = "DELETE_BOARD_SUCCESS";
+export const DELETE_BOARD_ERROR = "DELETE_BOARD_ERROR";
+
 export const UPDATE_BOARD = "UPDATE_BOARD";
+
 export const LOG_OUT_BOARD = "LOG_OUT_BOARD";
 
 //lists
@@ -21,6 +35,3 @@ export const UPDATE_LIST = "UPDATE_LIST";
 //tasks
 export const CREATE_TASK = "CREATE_TASK";
 export const DELETE_TASK = "DELETE_TASK";
-
-//error
-export const THEREIS_ERROR = "THEREIS_ERROR"

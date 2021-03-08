@@ -11,7 +11,7 @@ const LoginPage = (props) => {
     const {authenticate, error, loading, getUserAuth} = useContext(AuthContext);
     
     useEffect(()=>{
-        if(!authenticate && !loading)    
+        if(!authenticate)    
             getUserAuth();        
         // eslint-disable-next-line
     }, []);

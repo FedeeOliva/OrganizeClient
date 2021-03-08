@@ -22,7 +22,7 @@ const PrivateRoute = ({component: Component, ...props}) => {
           </Spinner>
     </div>
     :
-    <Route {...props} render = { props => authenticate && !loading ? (        
+    <Route {...props} render = { props => authenticate? (        
     		<Component {...props}/>
     	): (
     		<Redirect to="/" />

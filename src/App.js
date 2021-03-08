@@ -5,6 +5,8 @@ import {theme} from './config/theme';
 import AuthState from './context/authenticate/authState';
 import BoardState from './context/board/boardState';
 
+console.log( process.env.REACT_APP_BACKEND_URL)
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
