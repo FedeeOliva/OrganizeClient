@@ -12,7 +12,9 @@ import {
 	DELETE_BOARD_SUCCESS,
 	DELETE_BOARD_ERROR,
 	UPDATE_BOARD,
-	CREATE_LIST, 
+	CREATE_LIST,
+	CREATE_LIST_SUCCESS,
+	CREATE_LIST_ERROR, 
 	DELETE_LIST,
 	CREATE_TASK,
 	UPDATE_LIST,
@@ -35,6 +37,7 @@ export default (state, action) => {
 		case GET_BOARDS_ERROR:
 		case CREATE_BOARD_ERROR:
 		case DELETE_BOARD_ERROR:
+		case CREATE_LIST_ERROR:
 			return{
 				...state,
 				isLoading: false,
@@ -71,11 +74,12 @@ export default (state, action) => {
 			 	},
 			 	isLoading: false,
 			 }
-		case CREATE_LIST:
+		case CREATE_LIST_SUCCESS:
 			return{
 				...state,
-				board: {...state.board, lists: [...state.board.lists,action.payload ] }
-
+				board: {...state.board, lists: [...state.board.lists,action.payload ] },
+				isLoading: false,
+				error: false
 			}
 		case DELETE_LIST:
 			return{

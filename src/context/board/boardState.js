@@ -16,7 +16,9 @@ import {
 	DELETE_BOARD,
 	DELETE_BOARD_SUCCESS,
 	DELETE_BOARD_ERROR,
-	CREATE_LIST, 
+	CREATE_LIST,
+	CREATE_LIST_SUCCESS,
+	CREATE_LIST_ERROR, 
 	DELETE_LIST, 
 	CREATE_TASK,
 	DELETE_TASK, 
@@ -108,20 +110,26 @@ const BoardState = props => {
 
 	/*----- Listas------*/
 	const createList = async list =>{
-		dispatch({
-				type: CREATE_LIST,
-				payload: list
-		});
+		dispatch({type: CREATE_LIST});
 		try{
-			await Axios.post(`/api/lists?idBoard=${state.board._id}`, list);			
+			const response = await Axios.post(`/api/lists?idBoard=${state.board._id}`, list);			
+			
+			dispatch({
+				type: CREATE_LIST_SUCCESS,
+				payload: response.data.list
+			})
 		}catch(error){
 			console.log(error.msg);
+			dispatch({
+				type: CREATE_LIST_ERROR,
+				payload: 'No se pudo crear la lista'
+			})
 		}
 	}
 
 	const deleteList = id => {
 		try{
-			const url  = `/api/lists?idBoard=${state.board._id}&idList=${id}`
+			const url  = `/api/lists/${id}`
 			Axios.delete(url);
 			dispatch({
 				type: DELETE_LIST,
@@ -133,7 +141,7 @@ const BoardState = props => {
 	}
 
 	const updateList = list => {
-			const url = `/api/lists?idBoard=${state.board._id}`;	
+			const url = `/api/lists`;	
 			dispatch({
 				type: UPDATE_LIST,
 				payload: list

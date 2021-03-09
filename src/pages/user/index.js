@@ -43,7 +43,7 @@ const UserPage = (props) => {
                     imageID = {board.imageID}
         			/>
         		)}
-                <Card onClick = {handleNewBoard}>
+                <Card onClick = {handleNewBoard} className="shadow">
                     {isLoading?
                         <div className="spinner-border" role="status">
                           <span className="sr-only">Loading...</span>

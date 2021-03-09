@@ -45,8 +45,7 @@ const Tools = (props) => {
 		if(listName.trim() === '') return;
 
 		createList({
-			name: listName,			
-			_id : uuidv4(),
+			name: listName,	
 			tasks : [],
 		});
 		setAddingNewList(false);

@@ -24,6 +24,7 @@ const BoardCard = ({title, id,imageID}) => {
 		<Card 
 			onClick={handleClick}
 			image={image}
+			className="shadow"
 		>				
 			<Title>{title}</Title>    	
 		</Card>
