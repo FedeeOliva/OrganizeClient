@@ -106,6 +106,9 @@ const ListaComponent = ({list}) => {
                 <ReactSortable
                     list={localTasks}
                     setList={setLocalTasks}
+                    animation={200}
+                    delayOnTouchOnly={true}
+                    delay={500}
                     group="board"
                     filter=".ignore-drag"
                     onSort={() => updateTasksInList(list._id, localTasks)}

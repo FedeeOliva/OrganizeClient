@@ -40,7 +40,6 @@ const AuthState = props => {
 	}
 
 	const getUserAuth = async () =>{
-		console.log('getUserAuth');
 		dispatch({
 			type: GET_USER
 		});

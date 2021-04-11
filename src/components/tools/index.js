@@ -1,6 +1,5 @@
 import React, {useState, useContext} from 'react'; 
 import BoardContext from '../../context/board/boardContext';
-import { v4 as uuidv4 } from 'uuid';
 import {NavTools, ToolsContainer, Form} from './style';
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
